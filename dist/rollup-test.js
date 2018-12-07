@@ -354,43 +354,65 @@ __vue_render__._withStripped = true;
   );
 
 //
-
 var script$2 = {
   mixins: [TopicComponent],
+  props: ['count', 'limit', 'type'],
   computed: {
-    calloutClass() {
-      if (this.$props.options) {
-        if (this.$props.options.class) {
-          return this.$props.options.class;
+    // for horizontal tables only
+    externalLinkCount() {
+      return this.count - this.limit;
+    },
+
+    // for horizontal or vertical tables
+    externalLinkAction() {
+      const actionFn = this.options.action;
+
+      if (actionFn) {
+        return actionFn(this.externalLinkCount) || 'See more at ';
+      }
+    },
+
+    // for anything else, for getting data from the state
+    externalLinkDataFromState() {
+      // return this.options.externalLink.action || 'See more at ';
+      const stateData = this.options.data;
+      return this.evaluateSlot(stateData);
+    },
+
+    externalLinkText() {
+      if (this.options) {
+        const name = this.options.name || ''; // const preText = this.options.preText;
+        // const postText = this.options.postText;
+
+        if (this.type === 'vertical-table') {
+          // if (this.externalLinkAction) {
+          if (name) {
+            return `${this.externalLinkAction} at ${name}`;
+          } else {
+            return `${this.externalLinkAction}`;
+          }
+        } else if (this.type === 'horizontal-table') {
+          // if (name) {
+          //   return `${this.externalLinkAction} at ${name}`;
+          // } else {
+          return `${this.externalLinkAction}`; // }
         } else {
-          return 'columns small-24';
+          return `${this.externalLinkDataFromState}`;
         }
-      }
-    },
-
-    message() {
-      if (this.$props.slots) {
-        return this.evaluateSlot(this.$props.slots.text) || '';
       } else {
-        return '';
+        return null;
       }
     },
 
-    components() {
-      if (this.$props.options) {
-        return this.$props.options.components || null;
+    externalLinkHref() {
+      if (this.options) {
+        return this.evaluateSlot(this.options.href);
       } else {
         return null;
       }
     }
 
-  },
-  components: {},
-
-  beforeCreate() {
-    this.$options.components.TopicComponentGroup = TopicComponentGroup;
   }
-
 };
 
 /* script */
@@ -401,11 +423,9 @@ var __vue_render__$1 = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c("div", { staticClass: "wrapper grid-y" }, [
-    _c("div", { class: "callout " + this.calloutClass }, [
-      this.message
-        ? _c("p", { domProps: { innerHTML: _vm._s(this.message) } })
-        : _vm._e()
+  return _c("div", { staticClass: "external-link" }, [
+    _c("a", { attrs: { target: "_blank", href: _vm.externalLinkHref } }, [
+      _vm._v("\n    " + _vm._s(_vm.externalLinkText) + "\n    ")
     ])
   ])
 };
@@ -415,11 +435,11 @@ __vue_render__$1._withStripped = true;
   /* style */
   const __vue_inject_styles__$2 = function (inject) {
     if (!inject) return
-    inject("data-v-9ddcc2ee_0", { source: "\n.wrapper[data-v-9ddcc2ee] {\n}\n.callout[data-v-9ddcc2ee] {\r\n  margin-top: 1rem;\r\n  position: inherit;\r\n  height: auto;\n}\r\n\r\n", map: {"version":3,"sources":["C:\\Users\\andy.rothwell\\Projects\\rollup-test/C:\\Users\\andy.rothwell\\Projects\\rollup-test\\src\\components\\Callout.vue"],"names":[],"mappings":";AAsDA;CAEA;AAEA;EACA,iBAAA;EACA,kBAAA;EACA,aAAA;CACA","file":"Callout.vue","sourcesContent":["<template>\r\n  <div class='wrapper grid-y'>\r\n    <!-- <div class=\"callout columns small-24\"> -->\r\n    <div :class=\"'callout ' + this.calloutClass\">\r\n      <p v-if=\"this.message\"\r\n         v-html=\"this.message\"\r\n      />\r\n      <!-- <topic-component-group :topic-components=\"this.components\"\r\n                             v-if=\"this.components\"\r\n      /> -->\r\n    </div>\r\n  </div>\r\n</template>\r\n\r\n<script>\r\n  import TopicComponent from './TopicComponent.vue';\r\n  // import TopicComponentGroup from './TopicComponentGroup.vue'\r\n\r\n  export default {\r\n    mixins: [TopicComponent],\r\n    computed: {\r\n      calloutClass() {\r\n        if (this.$props.options) {\r\n          if (this.$props.options.class) {\r\n            return this.$props.options.class;\r\n          } else {\r\n            return 'columns small-24';\r\n          }\r\n        }\r\n      },\r\n      message() {\r\n        if (this.$props.slots) {\r\n          return this.evaluateSlot(this.$props.slots.text) || '';\r\n        } else {\r\n          return '';\r\n        }\r\n      },\r\n      components() {\r\n        if (this.$props.options) {\r\n          return this.$props.options.components || null;\r\n        } else {\r\n          return null;\r\n        }\r\n      },\r\n    },\r\n    components: {},\r\n    beforeCreate() {\r\n      this.$options.components.TopicComponentGroup = TopicComponentGroup;\r\n    }\r\n  };\r\n</script>\r\n\r\n<style scoped>\r\n\r\n.wrapper {\r\n\r\n}\r\n\r\n.callout {\r\n  margin-top: 1rem;\r\n  position: inherit;\r\n  height: auto;\r\n}\r\n\r\n</style>\r\n"]}, media: undefined });
+    inject("data-v-493d9b3c_0", { source: "\n.external-link[data-v-493d9b3c] {\r\n  padding-top: 5px;\n}\r\n\r\n", map: {"version":3,"sources":["C:\\Users\\andy.rothwell\\Projects\\rollup-test/C:\\Users\\andy.rothwell\\Projects\\rollup-test\\src\\components\\ExternalLink.vue"],"names":[],"mappings":";AA4EA;EACA,iBAAA;CACA","file":"ExternalLink.vue","sourcesContent":["<template>\r\n  <div class=\"external-link\">\r\n    <a target=\"_blank\"\r\n       :href=\"externalLinkHref\"\r\n    >\r\n      {{ externalLinkText }}\r\n      <!-- <font-awesome-icon icon=\"external-link\" aria-hidden=\"true\" /> -->\r\n    </a>\r\n  </div>\r\n</template>\r\n\r\n<script>\r\n  import TopicComponent from './TopicComponent.vue';\r\n\r\n  export default {\r\n    mixins: [TopicComponent],\r\n    props: ['count', 'limit', 'type'],\r\n    computed: {\r\n      // for horizontal tables only\r\n      externalLinkCount() {\r\n        return this.count - this.limit;\r\n      },\r\n      // for horizontal or vertical tables\r\n      externalLinkAction() {\r\n        const actionFn = this.options.action;\r\n        if (actionFn) {\r\n          return actionFn(this.externalLinkCount) || 'See more at ';\r\n        }\r\n      },\r\n      // for anything else, for getting data from the state\r\n      externalLinkDataFromState() {\r\n        // return this.options.externalLink.action || 'See more at ';\r\n        const stateData = this.options.data;\r\n        return this.evaluateSlot(stateData);\r\n      },\r\n      externalLinkText() {\r\n        if (this.options) {\r\n          const name = this.options.name  || '';\r\n          // const preText = this.options.preText;\r\n          // const postText = this.options.postText;\r\n\r\n          if (this.type === 'vertical-table') {\r\n          // if (this.externalLinkAction) {\r\n            if (name) {\r\n              return `${this.externalLinkAction} at ${name}`;\r\n            } else {\r\n              return `${this.externalLinkAction}`;\r\n            }\r\n          } else if (this.type === 'horizontal-table') {\r\n            // if (name) {\r\n            //   return `${this.externalLinkAction} at ${name}`;\r\n            // } else {\r\n              return `${this.externalLinkAction}`;\r\n            // }\r\n          } else {\r\n            return `${this.externalLinkDataFromState}`\r\n          }\r\n        } else {\r\n          return null;\r\n        }\r\n      },\r\n      externalLinkHref() {\r\n        if (this.options) {\r\n          return this.evaluateSlot(this.options.href);\r\n        } else {\r\n          return null;\r\n        }\r\n      },\r\n      // the number of items that aren't being shown (e.g. See 54 more...)\r\n    }\r\n  };\r\n\r\n</script>\r\n\r\n<style scoped>\r\n\r\n.external-link {\r\n  padding-top: 5px;\r\n}\r\n\r\n</style>\r\n"]}, media: undefined });
 
   };
   /* scoped */
-  const __vue_scope_id__$2 = "data-v-9ddcc2ee";
+  const __vue_scope_id__$2 = "data-v-493d9b3c";
   /* module identifier */
   const __vue_module_identifier__$2 = undefined;
   /* functional template */
@@ -433,7 +453,7 @@ __vue_render__$1._withStripped = true;
     const component = (typeof script === 'function' ? script.options : script) || {};
 
     // For security concerns, we use only base name in production mode.
-    component.__file = "C:\\Users\\andy.rothwell\\Projects\\rollup-test\\src\\components\\Callout.vue";
+    component.__file = "C:\\Users\\andy.rothwell\\Projects\\rollup-test\\src\\components\\ExternalLink.vue";
 
     if (!component.render) {
       component.render = template.render;
@@ -532,7 +552,7 @@ __vue_render__$1._withStripped = true;
   
 
   
-  var Callout = __vue_normalize__$2(
+  var ExternalLink = __vue_normalize__$2(
     { render: __vue_render__$1, staticRenderFns: __vue_staticRenderFns__$1 },
     __vue_inject_styles__$2,
     __vue_script__$2,
@@ -543,4 +563,4 @@ __vue_render__$1._withStripped = true;
     undefined
   );
 
-export { Badge, Callout, TopicComponent };
+export { Badge, ExternalLink, TopicComponent };
