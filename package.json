@@ -1,5 +1,6 @@
 {
   "name": "rollup-test",
+  "sideEffects": false,
   "version": "1.0.0",
   "main": "./dist/rollup-test.js",
   "license": "MIT",
