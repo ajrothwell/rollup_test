@@ -6,10 +6,15 @@ import TopicComponent from './components/TopicComponent.vue';
 
 import pvcStore from './store.js';
 
-export {
-  pvcStore,
-  Badge,
-  ExternalLink,
-  // Callout,
-  TopicComponent
-}
+export { pvcStore };
+export { Badge };
+export { ExternalLink };
+export { TopicComponent };
+
+// export {
+//   pvcStore,
+//   Badge,
+//   ExternalLink,
+//   // Callout,
+//   TopicComponent
+// }
