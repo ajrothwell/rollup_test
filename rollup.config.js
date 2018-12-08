@@ -15,7 +15,8 @@ export default {
   input: "src/main.js",
   output: {
     file: "dist/rollup-test.js",
-    format: "es",
+    format: "umd",
+    name: 'philaVueComps',
     globals: {
       vue: 'Vue',
     },
