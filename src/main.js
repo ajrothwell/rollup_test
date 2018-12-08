@@ -4,7 +4,10 @@ import ExternalLink from './components/ExternalLink.vue';
 // import Callout from './components/Callout.vue';
 import TopicComponent from './components/TopicComponent.vue';
 
+import pvcStore from './store.js';
+
 export {
+  pvcStore,
   Badge,
   ExternalLink,
   // Callout,
