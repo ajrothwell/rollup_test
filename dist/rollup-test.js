@@ -1,59 +1,75 @@
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
 var script = {
   // props: ['slots', 'options', 'item'],
   props: {
     'slots': {
       type: Object,
-      default: function () {
+      default: function _default() {
         return {};
       }
     },
     'options': {
       type: Object,
-      default: function () {
+      default: function _default() {
         return {};
       }
     },
     'item': {
       type: Object,
-      default: function () {
+      default: function _default() {
         return {};
       }
     }
   },
-
-  beforeCreate() {// console.log('TopicComponent.vue beforeCreate is running, this:', this);
+  beforeCreate: function beforeCreate() {// console.log('TopicComponent.vue beforeCreate is running, this:', this);
   },
-
-  created() {// console.log('TopicComponent.vue created is running, this.$props.slots:', this.$props.slots);
+  created: function created() {// console.log('TopicComponent.vue created is running, this.$props.slots:', this.$props.slots);
   },
-
   computed: {
-    nullValue() {
-      const options = this.options || {};
+    nullValue: function nullValue() {
+      var options = this.options || {};
       return options.nullValue;
     }
-
   },
   methods: {
-    evaluateSlot(valOrGetter, transforms = [], nullValue = '') {
+    evaluateSlot: function evaluateSlot(valOrGetter) {
+      var _this = this;
+
+      var transforms = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+      var nullValue = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+
       // console.log('evaluateSlot is running, valOrGetter:', valOrGetter);
       // check for null val/getter
       if (!valOrGetter) {
         return valOrGetter;
       }
 
-      const valOrGetterType = typeof valOrGetter;
-      let val; // fn
+      var valOrGetterType = _typeof(valOrGetter);
+
+      var val; // fn
 
       if (valOrGetterType === 'function') {
-        const state = this.$store.state;
-        const controller = this.$controller;
-        const getter = valOrGetter; // const getterText = String(getter);
+        var state = this.$store.state;
+        var controller = this.$controller;
+        var getter = valOrGetter; // const getterText = String(getter);
         // const depsRe = /state(\.\w+)+/g;
         // const depsText = getterText.match(depsRe);
         // const deps = depsText.map(eval);
 
-        const item = this.item; // console.log('in evaluateSlot, item:', item);
+        var item = this.item; // console.log('in evaluateSlot, item:', item);
         // if this comp is associated with an "item" (generally some object
         // from a list of things, e.g. dor parcels), pass the item itself
         // as well when evaluating
@@ -74,28 +90,53 @@ var script = {
       } // apply transforms
 
 
-      for (let transformKey of transforms) {
-        // get transform definition from config by name
-        const transform = this.$config.transforms[transformKey]; // make object of (relevant) globals by filtering window object
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
 
-        let globals;
-        const globalKeys = transform.globals;
+      try {
+        var _loop = function _loop() {
+          var transformKey = _step.value;
+          // get transform definition from config by name
+          var transform = _this.$config.transforms[transformKey]; // make object of (relevant) globals by filtering window object
 
-        if (globalKeys) {
-          globals = Object.keys(window).filter(key => globalKeys.includes(key)).reduce((obj, key) => {
-            obj[key] = window[key];
-            return obj;
-          }, {});
-        } // run transform
+          var globals = void 0;
+          var globalKeys = transform.globals;
+
+          if (globalKeys) {
+            globals = Object.keys(window).filter(function (key) {
+              return globalKeys.includes(key);
+            }).reduce(function (obj, key) {
+              obj[key] = window[key];
+              return obj;
+            }, {});
+          } // run transform
 
 
-        const fn = transform.transform;
-        val = fn(val, globals);
+          var fn = transform.transform;
+          val = fn(val, globals);
+        };
+
+        for (var _iterator = transforms[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          _loop();
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return != null) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
       }
 
       return val;
     }
-
   }
 };
 
@@ -160,9 +201,9 @@ var script$1 = {
   components: {// ExternalLink,
   },
   computed: {
-    style() {
-      const titleBackgroundValOrFn = (this.options || {}).titleBackground;
-      let titleBackground;
+    style: function style() {
+      var titleBackgroundValOrFn = (this.options || {}).titleBackground;
+      var titleBackground;
 
       if (titleBackgroundValOrFn) {
         if (typeof titleBackgroundValOrFn === 'function') {
@@ -178,7 +219,6 @@ var script$1 = {
         background: titleBackground
       };
     }
-
   }
 };
 
@@ -359,59 +399,54 @@ var script$2 = {
   props: ['count', 'limit', 'type'],
   computed: {
     // for horizontal tables only
-    externalLinkCount() {
+    externalLinkCount: function externalLinkCount() {
       return this.count - this.limit;
     },
-
     // for horizontal or vertical tables
-    externalLinkAction() {
-      const actionFn = this.options.action;
+    externalLinkAction: function externalLinkAction() {
+      var actionFn = this.options.action;
 
       if (actionFn) {
         return actionFn(this.externalLinkCount) || 'See more at ';
       }
     },
-
     // for anything else, for getting data from the state
-    externalLinkDataFromState() {
+    externalLinkDataFromState: function externalLinkDataFromState() {
       // return this.options.externalLink.action || 'See more at ';
-      const stateData = this.options.data;
+      var stateData = this.options.data;
       return this.evaluateSlot(stateData);
     },
-
-    externalLinkText() {
+    externalLinkText: function externalLinkText() {
       if (this.options) {
-        const name = this.options.name || ''; // const preText = this.options.preText;
+        var name = this.options.name || ''; // const preText = this.options.preText;
         // const postText = this.options.postText;
 
         if (this.type === 'vertical-table') {
           // if (this.externalLinkAction) {
           if (name) {
-            return `${this.externalLinkAction} at ${name}`;
+            return "".concat(this.externalLinkAction, " at ").concat(name);
           } else {
-            return `${this.externalLinkAction}`;
+            return "".concat(this.externalLinkAction);
           }
         } else if (this.type === 'horizontal-table') {
           // if (name) {
           //   return `${this.externalLinkAction} at ${name}`;
           // } else {
-          return `${this.externalLinkAction}`; // }
+          return "".concat(this.externalLinkAction); // }
         } else {
-          return `${this.externalLinkDataFromState}`;
+          return "".concat(this.externalLinkDataFromState);
         }
       } else {
         return null;
       }
     },
-
-    externalLinkHref() {
+    externalLinkHref: function externalLinkHref() {
       if (this.options) {
         return this.evaluateSlot(this.options.href);
       } else {
         return null;
       }
     }
-
   }
 };
 
@@ -563,7 +598,7 @@ __vue_render__$1._withStripped = true;
     undefined
   );
 
-const initialState = {
+var initialState = {
   // configurableInputCategorySelected: '',
   // configurableInputValueEntered: '',
   shouldShowAddressCandidateList: false,
@@ -574,7 +609,7 @@ const initialState = {
   },
   fullScreenTopicsEnabled: false
 };
-const pvcStore = {
+var pvcStore = {
   state: initialState,
   mutations: {
     // setConfigurableInputCategorySelected(state, payload) {
@@ -583,26 +618,21 @@ const pvcStore = {
     // setConfigurableInputValueEntered(state, payload) {
     //   state.configurableInputValueEntered = payload;
     // },
-    setShouldShowAddressCandidateList(state, payload) {
+    setShouldShowAddressCandidateList: function setShouldShowAddressCandidateList(state, payload) {
       state.shouldShowAddressCandidateList = payload;
     },
-
-    setPopoverOpen(state, payload) {
+    setPopoverOpen: function setPopoverOpen(state, payload) {
       state.popover.open = payload;
     },
-
-    setPopoverText(state, payload) {
+    setPopoverText: function setPopoverText(state, payload) {
       state.popover.text = payload;
     },
-
-    setPopoverOptions(state, payload) {
+    setPopoverOptions: function setPopoverOptions(state, payload) {
       state.popover.options = payload;
     },
-
-    setFullScreenTopicsEnabled(state, payload) {
+    setFullScreenTopicsEnabled: function setFullScreenTopicsEnabled(state, payload) {
       state.fullScreenTopicsEnabled = payload;
     }
-
   }
 };
 

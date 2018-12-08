@@ -25,9 +25,9 @@ export default {
     globals(),
     babel({
       exclude: "node_modules/**",
-      // presets: [
-      //   ["env", { modules: false }],
-      // ]
+      presets: [
+        ["@babel/preset-env", { modules: false }],
+      ]
     }),
     vue({
       css: true,
