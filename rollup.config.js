@@ -15,8 +15,8 @@ export default {
   input: "src/main.js",
   output: {
     file: "dist/rollup-test.js",
-    format: "umd",
-    name: 'philaVueComps',
+    format: "esm",
+    // name: 'philaVueComps',
     globals: {
       vue: 'Vue',
     },
@@ -24,12 +24,12 @@ export default {
   external,
   plugins: [
     globals(),
-    babel({
-      exclude: "node_modules/**",
-      presets: [
-        ["@babel/preset-env", { modules: false }],
-      ]
-    }),
+    // babel({
+    //   exclude: "node_modules/**",
+    //   presets: [
+    //     ["@babel/preset-env", { modules: false }],
+    //   ]
+    // }),
     vue({
       css: true,
     })
