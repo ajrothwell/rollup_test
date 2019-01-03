@@ -10,11 +10,3 @@ export { pvcStore };
 export { Badge };
 export { ExternalLink };
 export { TopicComponent };
-
-// export {
-//   pvcStore,
-//   Badge,
-//   ExternalLink,
-//   // Callout,
-//   TopicComponent
-// }

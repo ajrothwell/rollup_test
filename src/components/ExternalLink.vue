@@ -4,7 +4,6 @@
        :href="externalLinkHref"
     >
       {{ externalLinkText }}
-      <!-- <font-awesome-icon icon="external-link" aria-hidden="true" /> -->
     </a>
   </div>
 </template>

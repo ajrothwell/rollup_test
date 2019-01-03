@@ -444,7 +444,7 @@ var __vue_render__$1 = function() {
   var _c = _vm._self._c || _h;
   return _c("div", { staticClass: "external-link" }, [
     _c("a", { attrs: { target: "_blank", href: _vm.externalLinkHref } }, [
-      _vm._v("\n    " + _vm._s(_vm.externalLinkText) + "\n    ")
+      _vm._v("\n    " + _vm._s(_vm.externalLinkText) + "\n  ")
     ])
   ])
 };
@@ -454,11 +454,11 @@ __vue_render__$1._withStripped = true;
   /* style */
   const __vue_inject_styles__$2 = function (inject) {
     if (!inject) return
-    inject("data-v-493d9b3c_0", { source: "\n.external-link[data-v-493d9b3c] {\r\n  padding-top: 5px;\n}\r\n\r\n", map: {"version":3,"sources":["C:\\Users\\andy.rothwell\\Projects\\rollup-test/C:\\Users\\andy.rothwell\\Projects\\rollup-test\\src\\components\\ExternalLink.vue"],"names":[],"mappings":";AA4EA;EACA,iBAAA;CACA","file":"ExternalLink.vue","sourcesContent":["<template>\r\n  <div class=\"external-link\">\r\n    <a target=\"_blank\"\r\n       :href=\"externalLinkHref\"\r\n    >\r\n      {{ externalLinkText }}\r\n      <!-- <font-awesome-icon icon=\"external-link\" aria-hidden=\"true\" /> -->\r\n    </a>\r\n  </div>\r\n</template>\r\n\r\n<script>\r\n  import TopicComponent from './TopicComponent.vue';\r\n\r\n  export default {\r\n    mixins: [TopicComponent],\r\n    props: ['count', 'limit', 'type'],\r\n    computed: {\r\n      // for horizontal tables only\r\n      externalLinkCount() {\r\n        return this.count - this.limit;\r\n      },\r\n      // for horizontal or vertical tables\r\n      externalLinkAction() {\r\n        const actionFn = this.options.action;\r\n        if (actionFn) {\r\n          return actionFn(this.externalLinkCount) || 'See more at ';\r\n        }\r\n      },\r\n      // for anything else, for getting data from the state\r\n      externalLinkDataFromState() {\r\n        // return this.options.externalLink.action || 'See more at ';\r\n        const stateData = this.options.data;\r\n        return this.evaluateSlot(stateData);\r\n      },\r\n      externalLinkText() {\r\n        if (this.options) {\r\n          const name = this.options.name  || '';\r\n          // const preText = this.options.preText;\r\n          // const postText = this.options.postText;\r\n\r\n          if (this.type === 'vertical-table') {\r\n          // if (this.externalLinkAction) {\r\n            if (name) {\r\n              return `${this.externalLinkAction} at ${name}`;\r\n            } else {\r\n              return `${this.externalLinkAction}`;\r\n            }\r\n          } else if (this.type === 'horizontal-table') {\r\n            // if (name) {\r\n            //   return `${this.externalLinkAction} at ${name}`;\r\n            // } else {\r\n              return `${this.externalLinkAction}`;\r\n            // }\r\n          } else {\r\n            return `${this.externalLinkDataFromState}`\r\n          }\r\n        } else {\r\n          return null;\r\n        }\r\n      },\r\n      externalLinkHref() {\r\n        if (this.options) {\r\n          return this.evaluateSlot(this.options.href);\r\n        } else {\r\n          return null;\r\n        }\r\n      },\r\n      // the number of items that aren't being shown (e.g. See 54 more...)\r\n    }\r\n  };\r\n\r\n</script>\r\n\r\n<style scoped>\r\n\r\n.external-link {\r\n  padding-top: 5px;\r\n}\r\n\r\n</style>\r\n"]}, media: undefined });
+    inject("data-v-1f4f968f_0", { source: "\n.external-link[data-v-1f4f968f] {\r\n  padding-top: 5px;\n}\r\n\r\n", map: {"version":3,"sources":["C:\\Users\\andy.rothwell\\Projects\\rollup-test/C:\\Users\\andy.rothwell\\Projects\\rollup-test\\src\\components\\ExternalLink.vue"],"names":[],"mappings":";AA2EA;EACA,iBAAA;CACA","file":"ExternalLink.vue","sourcesContent":["<template>\r\n  <div class=\"external-link\">\r\n    <a target=\"_blank\"\r\n       :href=\"externalLinkHref\"\r\n    >\r\n      {{ externalLinkText }}\r\n    </a>\r\n  </div>\r\n</template>\r\n\r\n<script>\r\n  import TopicComponent from './TopicComponent.vue';\r\n\r\n  export default {\r\n    mixins: [TopicComponent],\r\n    props: ['count', 'limit', 'type'],\r\n    computed: {\r\n      // for horizontal tables only\r\n      externalLinkCount() {\r\n        return this.count - this.limit;\r\n      },\r\n      // for horizontal or vertical tables\r\n      externalLinkAction() {\r\n        const actionFn = this.options.action;\r\n        if (actionFn) {\r\n          return actionFn(this.externalLinkCount) || 'See more at ';\r\n        }\r\n      },\r\n      // for anything else, for getting data from the state\r\n      externalLinkDataFromState() {\r\n        // return this.options.externalLink.action || 'See more at ';\r\n        const stateData = this.options.data;\r\n        return this.evaluateSlot(stateData);\r\n      },\r\n      externalLinkText() {\r\n        if (this.options) {\r\n          const name = this.options.name  || '';\r\n          // const preText = this.options.preText;\r\n          // const postText = this.options.postText;\r\n\r\n          if (this.type === 'vertical-table') {\r\n          // if (this.externalLinkAction) {\r\n            if (name) {\r\n              return `${this.externalLinkAction} at ${name}`;\r\n            } else {\r\n              return `${this.externalLinkAction}`;\r\n            }\r\n          } else if (this.type === 'horizontal-table') {\r\n            // if (name) {\r\n            //   return `${this.externalLinkAction} at ${name}`;\r\n            // } else {\r\n              return `${this.externalLinkAction}`;\r\n            // }\r\n          } else {\r\n            return `${this.externalLinkDataFromState}`\r\n          }\r\n        } else {\r\n          return null;\r\n        }\r\n      },\r\n      externalLinkHref() {\r\n        if (this.options) {\r\n          return this.evaluateSlot(this.options.href);\r\n        } else {\r\n          return null;\r\n        }\r\n      },\r\n      // the number of items that aren't being shown (e.g. See 54 more...)\r\n    }\r\n  };\r\n\r\n</script>\r\n\r\n<style scoped>\r\n\r\n.external-link {\r\n  padding-top: 5px;\r\n}\r\n\r\n</style>\r\n"]}, media: undefined });
 
   };
   /* scoped */
-  const __vue_scope_id__$2 = "data-v-493d9b3c";
+  const __vue_scope_id__$2 = "data-v-1f4f968f";
   /* module identifier */
   const __vue_module_identifier__$2 = undefined;
   /* functional template */
@@ -620,13 +620,5 @@ const pvcStore = {
     },
   }
 };
-
-// export {
-//   pvcStore,
-//   Badge,
-//   ExternalLink,
-//   // Callout,
-//   TopicComponent
-// }
 
 export { pvcStore, Badge, ExternalLink, TopicComponent };
