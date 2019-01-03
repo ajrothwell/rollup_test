@@ -2,7 +2,7 @@
   "name": "rollup-test",
   "sideEffects": false,
   "version": "1.0.0",
-  "module": "./dist/rollup-test.js",
+  "main": "./src/components/index.js",
   "license": "MIT",
   "scripts": {
     "build": "npx rollup --config rollup.config.js",
