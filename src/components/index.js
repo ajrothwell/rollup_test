@@ -3,7 +3,7 @@ export { default as Badge } from './Badge.vue';
 export { default as Callout } from './Callout.vue';
 export { default as ExternalLink } from './ExternalLink.vue';
 export { default as TopicComponent } from './TopicComponent.vue';
-export { default as LegendBox } from './LegendBox.vue';
+export { default as Topic } from './Topic.vue';
 
 // import Vue from "vue";
 // import TopicComponent from './TopicComponent.vue';
