@@ -44,9 +44,9 @@
       },
     },
     components: {},
-    beforeCreate() {
-      this.$options.components.TopicComponentGroup = TopicComponentGroup;
-    }
+    // beforeCreate() {
+    //   this.$options.components.TopicComponentGroup = TopicComponentGroup;
+    // }
   };
 </script>
 

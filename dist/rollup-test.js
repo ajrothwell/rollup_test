@@ -375,63 +375,39 @@ __vue_render__._withStripped = true;
   );
 
 //
+// import TopicComponentGroup from './TopicComponentGroup.vue'
 
 var script$2 = {
   mixins: [TopicComponent],
-  props: ['count', 'limit', 'type'],
   computed: {
-    // for horizontal tables only
-    externalLinkCount() {
-      return this.count - this.limit;
-    },
-    // for horizontal or vertical tables
-    externalLinkAction() {
-      const actionFn = this.options.action;
-      if (actionFn) {
-        return actionFn(this.externalLinkCount) || 'See more at ';
-      }
-    },
-    // for anything else, for getting data from the state
-    externalLinkDataFromState() {
-      // return this.options.externalLink.action || 'See more at ';
-      const stateData = this.options.data;
-      return this.evaluateSlot(stateData);
-    },
-    externalLinkText() {
-      if (this.options) {
-        const name = this.options.name  || '';
-        // const preText = this.options.preText;
-        // const postText = this.options.postText;
-
-        if (this.type === 'vertical-table') {
-        // if (this.externalLinkAction) {
-          if (name) {
-            return `${this.externalLinkAction} at ${name}`;
-          } else {
-            return `${this.externalLinkAction}`;
-          }
-        } else if (this.type === 'horizontal-table') {
-          // if (name) {
-          //   return `${this.externalLinkAction} at ${name}`;
-          // } else {
-            return `${this.externalLinkAction}`;
-          // }
+    calloutClass() {
+      if (this.$props.options) {
+        if (this.$props.options.class) {
+          return this.$props.options.class;
         } else {
-          return `${this.externalLinkDataFromState}`
+          return 'columns small-24';
         }
+      }
+    },
+    message() {
+      if (this.$props.slots) {
+        return this.evaluateSlot(this.$props.slots.text) || '';
+      } else {
+        return '';
+      }
+    },
+    components() {
+      if (this.$props.options) {
+        return this.$props.options.components || null;
       } else {
         return null;
       }
     },
-    externalLinkHref() {
-      if (this.options) {
-        return this.evaluateSlot(this.options.href);
-      } else {
-        return null;
-      }
-    },
-    // the number of items that aren't being shown (e.g. See 54 more...)
-  }
+  },
+  components: {},
+  // beforeCreate() {
+  //   this.$options.components.TopicComponentGroup = TopicComponentGroup;
+  // }
 };
 
 /* script */
@@ -442,9 +418,11 @@ var __vue_render__$1 = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c("div", { staticClass: "external-link" }, [
-    _c("a", { attrs: { target: "_blank", href: _vm.externalLinkHref } }, [
-      _vm._v("\n    " + _vm._s(_vm.externalLinkText) + "\n  ")
+  return _c("div", { staticClass: "wrapper grid-y" }, [
+    _c("div", { class: "callout " + this.calloutClass }, [
+      this.message
+        ? _c("p", { domProps: { innerHTML: _vm._s(this.message) } })
+        : _vm._e()
     ])
   ])
 };
@@ -454,11 +432,11 @@ __vue_render__$1._withStripped = true;
   /* style */
   const __vue_inject_styles__$2 = function (inject) {
     if (!inject) return
-    inject("data-v-1f4f968f_0", { source: "\n.external-link[data-v-1f4f968f] {\r\n  padding-top: 5px;\n}\r\n\r\n", map: {"version":3,"sources":["C:\\Users\\andy.rothwell\\Projects\\rollup-test/C:\\Users\\andy.rothwell\\Projects\\rollup-test\\src\\components\\ExternalLink.vue"],"names":[],"mappings":";AA2EA;EACA,iBAAA;CACA","file":"ExternalLink.vue","sourcesContent":["<template>\r\n  <div class=\"external-link\">\r\n    <a target=\"_blank\"\r\n       :href=\"externalLinkHref\"\r\n    >\r\n      {{ externalLinkText }}\r\n    </a>\r\n  </div>\r\n</template>\r\n\r\n<script>\r\n  import TopicComponent from './TopicComponent.vue';\r\n\r\n  export default {\r\n    mixins: [TopicComponent],\r\n    props: ['count', 'limit', 'type'],\r\n    computed: {\r\n      // for horizontal tables only\r\n      externalLinkCount() {\r\n        return this.count - this.limit;\r\n      },\r\n      // for horizontal or vertical tables\r\n      externalLinkAction() {\r\n        const actionFn = this.options.action;\r\n        if (actionFn) {\r\n          return actionFn(this.externalLinkCount) || 'See more at ';\r\n        }\r\n      },\r\n      // for anything else, for getting data from the state\r\n      externalLinkDataFromState() {\r\n        // return this.options.externalLink.action || 'See more at ';\r\n        const stateData = this.options.data;\r\n        return this.evaluateSlot(stateData);\r\n      },\r\n      externalLinkText() {\r\n        if (this.options) {\r\n          const name = this.options.name  || '';\r\n          // const preText = this.options.preText;\r\n          // const postText = this.options.postText;\r\n\r\n          if (this.type === 'vertical-table') {\r\n          // if (this.externalLinkAction) {\r\n            if (name) {\r\n              return `${this.externalLinkAction} at ${name}`;\r\n            } else {\r\n              return `${this.externalLinkAction}`;\r\n            }\r\n          } else if (this.type === 'horizontal-table') {\r\n            // if (name) {\r\n            //   return `${this.externalLinkAction} at ${name}`;\r\n            // } else {\r\n              return `${this.externalLinkAction}`;\r\n            // }\r\n          } else {\r\n            return `${this.externalLinkDataFromState}`\r\n          }\r\n        } else {\r\n          return null;\r\n        }\r\n      },\r\n      externalLinkHref() {\r\n        if (this.options) {\r\n          return this.evaluateSlot(this.options.href);\r\n        } else {\r\n          return null;\r\n        }\r\n      },\r\n      // the number of items that aren't being shown (e.g. See 54 more...)\r\n    }\r\n  };\r\n\r\n</script>\r\n\r\n<style scoped>\r\n\r\n.external-link {\r\n  padding-top: 5px;\r\n}\r\n\r\n</style>\r\n"]}, media: undefined });
+    inject("data-v-6923321a_0", { source: "\n.wrapper[data-v-6923321a] {\n}\n.callout[data-v-6923321a] {\r\n  margin-top: 1rem;\r\n  position: inherit;\r\n  height: auto;\n}\r\n\r\n", map: {"version":3,"sources":["C:\\Users\\andy.rothwell\\Projects\\rollup-test/C:\\Users\\andy.rothwell\\Projects\\rollup-test\\src\\components\\Callout.vue"],"names":[],"mappings":";AAsDA;CAEA;AAEA;EACA,iBAAA;EACA,kBAAA;EACA,aAAA;CACA","file":"Callout.vue","sourcesContent":["<template>\r\n  <div class='wrapper grid-y'>\r\n    <!-- <div class=\"callout columns small-24\"> -->\r\n    <div :class=\"'callout ' + this.calloutClass\">\r\n      <p v-if=\"this.message\"\r\n         v-html=\"this.message\"\r\n      />\r\n      <!-- <topic-component-group :topic-components=\"this.components\"\r\n                             v-if=\"this.components\"\r\n      /> -->\r\n    </div>\r\n  </div>\r\n</template>\r\n\r\n<script>\r\n  import TopicComponent from './TopicComponent.vue';\r\n  // import TopicComponentGroup from './TopicComponentGroup.vue'\r\n\r\n  export default {\r\n    mixins: [TopicComponent],\r\n    computed: {\r\n      calloutClass() {\r\n        if (this.$props.options) {\r\n          if (this.$props.options.class) {\r\n            return this.$props.options.class;\r\n          } else {\r\n            return 'columns small-24';\r\n          }\r\n        }\r\n      },\r\n      message() {\r\n        if (this.$props.slots) {\r\n          return this.evaluateSlot(this.$props.slots.text) || '';\r\n        } else {\r\n          return '';\r\n        }\r\n      },\r\n      components() {\r\n        if (this.$props.options) {\r\n          return this.$props.options.components || null;\r\n        } else {\r\n          return null;\r\n        }\r\n      },\r\n    },\r\n    components: {},\r\n    // beforeCreate() {\r\n    //   this.$options.components.TopicComponentGroup = TopicComponentGroup;\r\n    // }\r\n  };\r\n</script>\r\n\r\n<style scoped>\r\n\r\n.wrapper {\r\n\r\n}\r\n\r\n.callout {\r\n  margin-top: 1rem;\r\n  position: inherit;\r\n  height: auto;\r\n}\r\n\r\n</style>\r\n"]}, media: undefined });
 
   };
   /* scoped */
-  const __vue_scope_id__$2 = "data-v-1f4f968f";
+  const __vue_scope_id__$2 = "data-v-6923321a";
   /* module identifier */
   const __vue_module_identifier__$2 = undefined;
   /* functional template */
@@ -472,7 +450,7 @@ __vue_render__$1._withStripped = true;
     const component = (typeof script === 'function' ? script.options : script) || {};
 
     // For security concerns, we use only base name in production mode.
-    component.__file = "C:\\Users\\andy.rothwell\\Projects\\rollup-test\\src\\components\\ExternalLink.vue";
+    component.__file = "C:\\Users\\andy.rothwell\\Projects\\rollup-test\\src\\components\\Callout.vue";
 
     if (!component.render) {
       component.render = template.render;
@@ -571,7 +549,7 @@ __vue_render__$1._withStripped = true;
   
 
   
-  var ExternalLink = __vue_normalize__$2(
+  var Callout = __vue_normalize__$2(
     { render: __vue_render__$1, staticRenderFns: __vue_staticRenderFns__$1 },
     __vue_inject_styles__$2,
     __vue_script__$2,
@@ -579,6 +557,397 @@ __vue_render__$1._withStripped = true;
     __vue_is_functional_template__$2,
     __vue_module_identifier__$2,
     __vue_create_injector__$1,
+    undefined
+  );
+
+//
+
+var script$3 = {
+  mixins: [TopicComponent],
+  props: ['count', 'limit', 'type'],
+  computed: {
+    // for horizontal tables only
+    externalLinkCount() {
+      return this.count - this.limit;
+    },
+    // for horizontal or vertical tables
+    externalLinkAction() {
+      const actionFn = this.options.action;
+      if (actionFn) {
+        return actionFn(this.externalLinkCount) || 'See more at ';
+      }
+    },
+    // for anything else, for getting data from the state
+    externalLinkDataFromState() {
+      // return this.options.externalLink.action || 'See more at ';
+      const stateData = this.options.data;
+      return this.evaluateSlot(stateData);
+    },
+    externalLinkText() {
+      if (this.options) {
+        const name = this.options.name  || '';
+        // const preText = this.options.preText;
+        // const postText = this.options.postText;
+
+        if (this.type === 'vertical-table') {
+        // if (this.externalLinkAction) {
+          if (name) {
+            return `${this.externalLinkAction} at ${name}`;
+          } else {
+            return `${this.externalLinkAction}`;
+          }
+        } else if (this.type === 'horizontal-table') {
+          // if (name) {
+          //   return `${this.externalLinkAction} at ${name}`;
+          // } else {
+            return `${this.externalLinkAction}`;
+          // }
+        } else {
+          return `${this.externalLinkDataFromState}`
+        }
+      } else {
+        return null;
+      }
+    },
+    externalLinkHref() {
+      if (this.options) {
+        return this.evaluateSlot(this.options.href);
+      } else {
+        return null;
+      }
+    },
+    // the number of items that aren't being shown (e.g. See 54 more...)
+  }
+};
+
+/* script */
+            const __vue_script__$3 = script$3;
+            
+/* template */
+var __vue_render__$2 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c("div", { staticClass: "external-link" }, [
+    _c("a", { attrs: { target: "_blank", href: _vm.externalLinkHref } }, [
+      _vm._v("\n    " + _vm._s(_vm.externalLinkText) + "\n  ")
+    ])
+  ])
+};
+var __vue_staticRenderFns__$2 = [];
+__vue_render__$2._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$3 = function (inject) {
+    if (!inject) return
+    inject("data-v-1f4f968f_0", { source: "\n.external-link[data-v-1f4f968f] {\r\n  padding-top: 5px;\n}\r\n\r\n", map: {"version":3,"sources":["C:\\Users\\andy.rothwell\\Projects\\rollup-test/C:\\Users\\andy.rothwell\\Projects\\rollup-test\\src\\components\\ExternalLink.vue"],"names":[],"mappings":";AA2EA;EACA,iBAAA;CACA","file":"ExternalLink.vue","sourcesContent":["<template>\r\n  <div class=\"external-link\">\r\n    <a target=\"_blank\"\r\n       :href=\"externalLinkHref\"\r\n    >\r\n      {{ externalLinkText }}\r\n    </a>\r\n  </div>\r\n</template>\r\n\r\n<script>\r\n  import TopicComponent from './TopicComponent.vue';\r\n\r\n  export default {\r\n    mixins: [TopicComponent],\r\n    props: ['count', 'limit', 'type'],\r\n    computed: {\r\n      // for horizontal tables only\r\n      externalLinkCount() {\r\n        return this.count - this.limit;\r\n      },\r\n      // for horizontal or vertical tables\r\n      externalLinkAction() {\r\n        const actionFn = this.options.action;\r\n        if (actionFn) {\r\n          return actionFn(this.externalLinkCount) || 'See more at ';\r\n        }\r\n      },\r\n      // for anything else, for getting data from the state\r\n      externalLinkDataFromState() {\r\n        // return this.options.externalLink.action || 'See more at ';\r\n        const stateData = this.options.data;\r\n        return this.evaluateSlot(stateData);\r\n      },\r\n      externalLinkText() {\r\n        if (this.options) {\r\n          const name = this.options.name  || '';\r\n          // const preText = this.options.preText;\r\n          // const postText = this.options.postText;\r\n\r\n          if (this.type === 'vertical-table') {\r\n          // if (this.externalLinkAction) {\r\n            if (name) {\r\n              return `${this.externalLinkAction} at ${name}`;\r\n            } else {\r\n              return `${this.externalLinkAction}`;\r\n            }\r\n          } else if (this.type === 'horizontal-table') {\r\n            // if (name) {\r\n            //   return `${this.externalLinkAction} at ${name}`;\r\n            // } else {\r\n              return `${this.externalLinkAction}`;\r\n            // }\r\n          } else {\r\n            return `${this.externalLinkDataFromState}`\r\n          }\r\n        } else {\r\n          return null;\r\n        }\r\n      },\r\n      externalLinkHref() {\r\n        if (this.options) {\r\n          return this.evaluateSlot(this.options.href);\r\n        } else {\r\n          return null;\r\n        }\r\n      },\r\n      // the number of items that aren't being shown (e.g. See 54 more...)\r\n    }\r\n  };\r\n\r\n</script>\r\n\r\n<style scoped>\r\n\r\n.external-link {\r\n  padding-top: 5px;\r\n}\r\n\r\n</style>\r\n"]}, media: undefined });
+
+  };
+  /* scoped */
+  const __vue_scope_id__$3 = "data-v-1f4f968f";
+  /* module identifier */
+  const __vue_module_identifier__$3 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$3 = false;
+  /* component normalizer */
+  function __vue_normalize__$3(
+    template, style, script,
+    scope, functional, moduleIdentifier,
+    createInjector, createInjectorSSR
+  ) {
+    const component = (typeof script === 'function' ? script.options : script) || {};
+
+    // For security concerns, we use only base name in production mode.
+    component.__file = "C:\\Users\\andy.rothwell\\Projects\\rollup-test\\src\\components\\ExternalLink.vue";
+
+    if (!component.render) {
+      component.render = template.render;
+      component.staticRenderFns = template.staticRenderFns;
+      component._compiled = true;
+
+      if (functional) component.functional = true;
+    }
+
+    component._scopeId = scope;
+
+    {
+      let hook;
+      if (style) {
+        hook = function(context) {
+          style.call(this, createInjector(context));
+        };
+      }
+
+      if (hook !== undefined) {
+        if (component.functional) {
+          // register for functional component in vue file
+          const originalRender = component.render;
+          component.render = function renderWithStyleInjection(h, context) {
+            hook.call(context);
+            return originalRender(h, context)
+          };
+        } else {
+          // inject component registration as beforeCreate hook
+          const existing = component.beforeCreate;
+          component.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+        }
+      }
+    }
+
+    return component
+  }
+  /* style inject */
+  function __vue_create_injector__$2() {
+    const head = document.head || document.getElementsByTagName('head')[0];
+    const styles = __vue_create_injector__$2.styles || (__vue_create_injector__$2.styles = {});
+    const isOldIE =
+      typeof navigator !== 'undefined' &&
+      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
+
+    return function addStyle(id, css) {
+      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
+
+      const group = isOldIE ? css.media || 'default' : id;
+      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
+
+      if (!style.ids.includes(id)) {
+        let code = css.source;
+        let index = style.ids.length;
+
+        style.ids.push(id);
+
+        if (isOldIE) {
+          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
+        }
+
+        if (!style.element) {
+          const el = style.element = document.createElement('style');
+          el.type = 'text/css';
+
+          if (css.media) el.setAttribute('media', css.media);
+          if (isOldIE) {
+            el.setAttribute('data-group', group);
+            el.setAttribute('data-next-index', '0');
+          }
+
+          head.appendChild(el);
+        }
+
+        if (isOldIE) {
+          index = parseInt(style.element.getAttribute('data-next-index'));
+          style.element.setAttribute('data-next-index', index + 1);
+        }
+
+        if (style.element.styleSheet) {
+          style.parts.push(code);
+          style.element.styleSheet.cssText = style.parts
+            .filter(Boolean)
+            .join('\n');
+        } else {
+          const textNode = document.createTextNode(code);
+          const nodes = style.element.childNodes;
+          if (nodes[index]) style.element.removeChild(nodes[index]);
+          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
+          else style.element.appendChild(textNode);
+        }
+      }
+    }
+  }
+  /* style inject SSR */
+  
+
+  
+  var ExternalLink = __vue_normalize__$3(
+    { render: __vue_render__$2, staticRenderFns: __vue_staticRenderFns__$2 },
+    __vue_inject_styles__$3,
+    __vue_script__$3,
+    __vue_scope_id__$3,
+    __vue_is_functional_template__$3,
+    __vue_module_identifier__$3,
+    __vue_create_injector__$2,
+    undefined
+  );
+
+//
+
+var script$4 = {
+  mixins: [TopicComponent],
+};
+
+/* script */
+            const __vue_script__$4 = script$4;
+            
+/* template */
+var __vue_render__$3 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c("div", { staticClass: "list" }, [
+    _vm.evaluateSlot(_vm.slots.relatedAddresses)
+      ? _c(
+          "ul",
+          _vm._l(_vm.evaluateSlot(_vm.slots.relatedAddresses), function(
+            relatedAddress
+          ) {
+            return _c("li", [
+              _c(
+                "a",
+                {
+                  attrs: {
+                    href:
+                      "#/" +
+                      encodeURIComponent(
+                        relatedAddress.properties.street_address
+                      )
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(relatedAddress.properties.street_address) +
+                      "\n      "
+                  )
+                ]
+              )
+            ])
+          })
+        )
+      : _c("p", { staticClass: "message-p" }, [
+          _vm._v("\n    No related addresses were found for this address.\n  ")
+        ])
+  ])
+};
+var __vue_staticRenderFns__$3 = [];
+__vue_render__$3._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$4 = function (inject) {
+    if (!inject) return
+    inject("data-v-04946bd2_0", { source: "\n.list[data-v-04946bd2] {\r\n  position: inherit;\r\n  margin-bottom: 0px !important;\n}\nul[data-v-04946bd2] {\r\n  list-style: none;\r\n  padding-left: 0;\r\n  margin-left: 0;\n}\n.message-p[data-v-04946bd2] {\r\n  margin-bottom: 0px;\n}\r\n\r\n/*.topic-body {\r\n  margin-bottom: 0px;\r\n}*/\r\n\r\n", map: {"version":3,"sources":["C:\\Users\\andy.rothwell\\Projects\\rollup-test/C:\\Users\\andy.rothwell\\Projects\\rollup-test\\src\\components\\List.vue"],"names":[],"mappings":";AA6BA;EACA,kBAAA;EACA,8BAAA;CACA;AAEA;EACA,iBAAA;EACA,gBAAA;EACA,eAAA;CACA;AAEA;EACA,mBAAA;CACA;;AAEA;;GAEA","file":"List.vue","sourcesContent":["<template>\r\n  <div class=\"list\">\r\n    <ul v-if=\"evaluateSlot(slots.relatedAddresses)\">\r\n      <li v-for=\"relatedAddress in evaluateSlot(slots.relatedAddresses)\"\r\n      >\r\n        <a :href=\"'#/' + encodeURIComponent(relatedAddress.properties.street_address)\"\r\n        >\r\n          {{ relatedAddress.properties.street_address }}\r\n        </a>\r\n      </li>\r\n    </ul>\r\n    <p v-else\r\n       class=\"message-p\"\r\n    >\r\n      No related addresses were found for this address.\r\n    </p>\r\n  </div>\r\n</template>\r\n\r\n<script>\r\n  import TopicComponent from './TopicComponent.vue';\r\n\r\n  export default {\r\n    mixins: [TopicComponent],\r\n  };\r\n</script>\r\n\r\n<style scoped>\r\n\r\n.list {\r\n  position: inherit;\r\n  margin-bottom: 0px !important;\r\n}\r\n\r\nul {\r\n  list-style: none;\r\n  padding-left: 0;\r\n  margin-left: 0;\r\n}\r\n\r\n.message-p {\r\n  margin-bottom: 0px;\r\n}\r\n\r\n/*.topic-body {\r\n  margin-bottom: 0px;\r\n}*/\r\n\r\n</style>\r\n"]}, media: undefined });
+
+  };
+  /* scoped */
+  const __vue_scope_id__$4 = "data-v-04946bd2";
+  /* module identifier */
+  const __vue_module_identifier__$4 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$4 = false;
+  /* component normalizer */
+  function __vue_normalize__$4(
+    template, style, script,
+    scope, functional, moduleIdentifier,
+    createInjector, createInjectorSSR
+  ) {
+    const component = (typeof script === 'function' ? script.options : script) || {};
+
+    // For security concerns, we use only base name in production mode.
+    component.__file = "C:\\Users\\andy.rothwell\\Projects\\rollup-test\\src\\components\\List.vue";
+
+    if (!component.render) {
+      component.render = template.render;
+      component.staticRenderFns = template.staticRenderFns;
+      component._compiled = true;
+
+      if (functional) component.functional = true;
+    }
+
+    component._scopeId = scope;
+
+    {
+      let hook;
+      if (style) {
+        hook = function(context) {
+          style.call(this, createInjector(context));
+        };
+      }
+
+      if (hook !== undefined) {
+        if (component.functional) {
+          // register for functional component in vue file
+          const originalRender = component.render;
+          component.render = function renderWithStyleInjection(h, context) {
+            hook.call(context);
+            return originalRender(h, context)
+          };
+        } else {
+          // inject component registration as beforeCreate hook
+          const existing = component.beforeCreate;
+          component.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+        }
+      }
+    }
+
+    return component
+  }
+  /* style inject */
+  function __vue_create_injector__$3() {
+    const head = document.head || document.getElementsByTagName('head')[0];
+    const styles = __vue_create_injector__$3.styles || (__vue_create_injector__$3.styles = {});
+    const isOldIE =
+      typeof navigator !== 'undefined' &&
+      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
+
+    return function addStyle(id, css) {
+      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
+
+      const group = isOldIE ? css.media || 'default' : id;
+      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
+
+      if (!style.ids.includes(id)) {
+        let code = css.source;
+        let index = style.ids.length;
+
+        style.ids.push(id);
+
+        if (isOldIE) {
+          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
+        }
+
+        if (!style.element) {
+          const el = style.element = document.createElement('style');
+          el.type = 'text/css';
+
+          if (css.media) el.setAttribute('media', css.media);
+          if (isOldIE) {
+            el.setAttribute('data-group', group);
+            el.setAttribute('data-next-index', '0');
+          }
+
+          head.appendChild(el);
+        }
+
+        if (isOldIE) {
+          index = parseInt(style.element.getAttribute('data-next-index'));
+          style.element.setAttribute('data-next-index', index + 1);
+        }
+
+        if (style.element.styleSheet) {
+          style.parts.push(code);
+          style.element.styleSheet.cssText = style.parts
+            .filter(Boolean)
+            .join('\n');
+        } else {
+          const textNode = document.createTextNode(code);
+          const nodes = style.element.childNodes;
+          if (nodes[index]) style.element.removeChild(nodes[index]);
+          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
+          else style.element.appendChild(textNode);
+        }
+      }
+    }
+  }
+  /* style inject SSR */
+  
+
+  
+  var List = __vue_normalize__$4(
+    { render: __vue_render__$3, staticRenderFns: __vue_staticRenderFns__$3 },
+    __vue_inject_styles__$4,
+    __vue_script__$4,
+    __vue_scope_id__$4,
+    __vue_is_functional_template__$4,
+    __vue_module_identifier__$4,
+    __vue_create_injector__$3,
     undefined
   );
 
@@ -621,4 +990,4 @@ const pvcStore = {
   }
 };
 
-export { pvcStore, Badge, ExternalLink, TopicComponent };
+export { Badge, Callout, ExternalLink, TopicComponent, List, pvcStore };
