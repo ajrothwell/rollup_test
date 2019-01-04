@@ -4,6 +4,7 @@ export { default as Callout } from './Callout.vue';
 export { default as ExternalLink } from './ExternalLink.vue';
 export { default as TopicComponent } from './TopicComponent.vue';
 export { default as Topic } from './Topic.vue';
+export { default as TopicComponentGroup } from './TopicComponentGroup.vue';
 
 // import Vue from "vue";
 // import TopicComponent from './TopicComponent.vue';
